@@ -9,9 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ContextoBD>(
-    //opt => opt.UseSqlServer("Data Source=.;Initial Catalog=BiblioExe;Integrated Security=True")
-    //opt => opt.UseSqlServer("Data Source=IVANNROMERO1010\\SQLEXPRESS;Initial Catalog=BiblioExe;Integrated Security=True")
-    opt => opt.UseSqlServer("Server=tcp:biblioexe.database.windows.net,1433;Initial Catalog=BiblioExe;Persist Security Info=False;User ID=administrador;Password=@rturo2006;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
+    opt => opt.UseSqlServer("Data Source=.;Initial Catalog=BiblioExe;Integrated Security=True")
 );
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(opt =>
