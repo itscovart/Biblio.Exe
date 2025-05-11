@@ -1,0 +1,160 @@
+﻿@model List<BiblioExe.Models.Prestamo>
+
+@{
+    ViewData["Title"] = "Prestamos";
+    var estado = "";
+    var NombreLibro = "";
+    var AutorLibro = "";
+    var EditorialLibro = "";
+    var Ultima = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="container-fluid mt-5" style="min-height: 60vh; max-width: 180vh">
+    <form method="post" asp-action="FinalizarPrestamo">
+        <div class="row mb-2">
+            <div class="col-12 d-flex justify-content-center">
+                <h2>Prestamos</h2>
+            </div>
+        </div>
+        <table class="table text-center" id="tablaDatos">
+            <thead>
+                <tr>
+                    <th scope="col">Folio</th>
+                    <th scope="col">Libro</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Editorial</th>
+                    <th scope="col">Grupo</th>
+                    <th scope="col">Materia</th>
+                    <th scope="col">Maestro</th>
+                    <th scope="col">Dia Inicio</th>
+                    <th scope="col">Dia Final</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Fecha Entrega</th>
+                    <th scope="col">Funciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var id = 1;
+                }
+                @foreach (var Prestamo in Model)
+                {
+                <input type="hidden" name="FolioSeleccionado" id="FolioSeleccionado" value="" />
+                <input type="hidden" name="IDPrestamo" value="@id"></input>
+                <input type="hidden" name="Folio[@Prestamo]" value="@Prestamo.Folio"></input>
+                <input type="hidden" name="IDLibro[]" value="@Prestamo.IDLibro"></input>
+                <input type="hidden" name="FechaInicio" value="@Prestamo.Fecha_inicio"></input>
+                    @foreach(var Libro in ViewBag.Libro)
+                        {
+                            if(Libro.IDLibro == @Prestamo.IDLibro)
+                            {
+                                NombreLibro = Libro.Nombre;
+                                AutorLibro = Libro.Autor;
+                                EditorialLibro = Libro.Editorial;
+                                break;
+                            }
+                        }
+                    if(@Prestamo.IDEstado == 1)
+                    {
+                        estado = "Aceptado";
+                    }
+                    else if(@Prestamo.IDEstado == 2)
+                    {
+                        estado = "Finalizado";
+                    }
+                    else if(@Prestamo.IDEstado == 3)
+                    {
+                        estado = "Rechazado";
+                    }
+                    <tr>
+                        <th scope="row">@Prestamo.Folio</th>
+                        <td>@NombreLibro</td>
+                        <td>@AutorLibro</td>
+                        <td>@EditorialLibro</td>
+                        <td>@Prestamo.Grupo</td>
+                        <td>@Prestamo.Materia</td>
+                        <td>@Prestamo.Maestro</td>
+                        <td>@Prestamo.Fecha_inicio.ToString("yyyy-MM-dd")</td>
+                        <td>@Prestamo.Fecha_final.ToString("yyyy-MM-dd")</td>
+                        <td>@Prestamo.Cantidad</td>
+                        <td>@estado</td>
+                            @if(@Prestamo.IDEstado == 1)
+                            {
+                                <td></td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary btn-md" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border-radius: 10px" onclick="setSelectedFolio('@Prestamo.Folio')">
+                                        Finalizar
+                                    </button>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ¿Esta seguro que desea finalizar el prestamo con el folio "@Prestamo.Folio"?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            }
+                            else if (@Prestamo.IDEstado == 2)
+                            {
+                                <td>@Prestamo.FechaEntrega.ToString("yyyy-MM-dd")</td>
+                                <td></td>
+                            }
+                        </tr>
+                    id++;
+                }
+            </tbody>
+        </table>
+    </form>
+    </div>
+</body>
+<script>
+    function setSelectedFolio(folio) {
+        document.getElementById("FolioSeleccionado").value = folio;
+    }
+    function exportToExcel() {
+        var tabla = document.getElementById("tablaDatos");
+        var csv = [];
+        var filas = tabla.rows;
+
+        for (var i = 0; i < filas.length; i++) {
+            var fila = filas[i];
+            var rowData = [];
+
+            for (var j = 0; j < fila.cells.length; j++) {
+                rowData.push(fila.cells[j].innerText);
+            }
+
+            csv.push(rowData.join(","));
+        }
+
+        var csvContent = "data:text/csv;charset=utf-8," + csv.join("\n");
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "tabla_datos.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</html>

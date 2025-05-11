@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Nuevo Administrador";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <style>
+        body{
+            background-color: #900C3F;
+        }
+    </style>
+</head>
+<body>
+    <form asp-action="AñadirUsuario" method="post">
+    <div class="container text-center" style="padding: 80px 0px; box-shadow: 10px 10px 100px rgb(0, 0, 0); border-radius: 60px; margin-top: 20px; margin-bottom: 80px; background-color: #fff; width: 70%;">
+        <h2>Añadir Nuevo Usuario</h2>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                    <input type="text" class="form-control" placeholder="Nombre" aria-label="Name" aria-describedby="button-addon1" name="Nombre" maxlength="100" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Apellido Paterno</span>
+                    <input type="text" class="form-control" placeholder="Apellido Paterno" aria-label="Name" aria-describedby="button-addon1" name="ApellidoP" maxlength="100" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Apellido Materno</span>
+                    <input type="text" class="form-control" placeholder="Apellido Materno" aria-label="Name" aria-describedby="button-addon1" name="ApellidoM" maxlength="100" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Correo</span>
+                    <input type="email" class="form-control" placeholder="Correo" aria-label="Email" aria-describedby="button-addon1" minlength="5" name="Correo" maxlength="80" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Contraseña</span>
+                    <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="button-addon1" id="InputPassword" minlength="8" maxlength="20" name="Contraseña" required>
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0" type="checkbox" aria-label="Checkbox for following text input" id="chPassword" onclick="MostrarContraseña()">
+                        <label class="form-check-label" for="chPassword">
+                            Mostrar
+                        </label>
+                    </div>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Confirmar Contraseña</span>
+                    <input type="password" class="form-control" placeholder="Confirm Password" aria-label="ConfirmPassword" aria-describedby="button-addon1" id="InputPassword1" minlength="8" maxlength="20" required>
+                    <div class="input-group-text">
+                        <input class="form-check-input mt-0" type="checkbox" aria-label="Checkbox for following text input" id="chPassword1" onclick="MostrarContraseñaConfirmar()">
+                        <label class="form-check-label" for="chPassword">
+                            Mostrar
+                        </label>
+                    </div>
+                </div>
+            </div>                
+        </div>
+        <div class="btn-group mt-3 " role="group" aria-label="Default button group">
+            <button type="submit" class="btn btn-outline-primary" id="btnSubmit" onclick="ComprobarContra()">Añadir</button>
+        </div>
+    </div>
+    </form>
+    <script>
+        function MostrarContraseña() {
+            const InputPassword = document.getElementById("InputPassword");
+            const chBox = document.getElementById("chPassword");
+            if(chBox.checked)
+                InputPassword.type = "text";
+            else
+                InputPassword.type = "password";
+        }
+        function MostrarContraseñaConfirmar() {
+            const InputPassword = document.getElementById("InputPassword1");
+            const chBox = document.getElementById("chPassword1");
+            if(chBox.checked)
+                InputPassword.type = "text";
+            else
+                InputPassword.type = "password";
+        }
+        function ComprobarContra()
+        {
+            var Contra1 = document.getElementById("InputPassword").value;
+            var Contra2 = document.getElementById("InputPassword1").value;
+
+            if(Contra1 != Contra2)
+                alert("Las contraseñas deben de coincidir")
+        }
+    </script>
+</body>
+</html>

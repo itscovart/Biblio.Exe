@@ -1,0 +1,97 @@
+﻿@model List<BiblioExe.Models.Categoria>
+
+@{
+    ViewData ["Title"] = "Nuevo Libro";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <style>
+        body{
+            background-color: #900C3F;
+        }
+    </style>
+</head>
+<body>
+    <form asp-action="AñadirLibro" method="post" enctype="multipart/form-data" onsubmit="ValidarCategoria()">
+    <div class="container text-center mt-5" style="padding: 80px 0px; box-shadow: 10px 10px 100px rgb(0, 0, 0); border-radius: 60px; margin-top: 20px; margin-bottom: 80px; background-color: #fff; width: 70%;">
+        <h2>Añadir Nuevo Libro</h2>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Nombre</span>
+                    <input type="text" class="form-control" placeholder="Nombre" aria-label="Name" aria-describedby="button-addon1" name="Nombre" maxlength="120" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Autor</span>
+                    <input type="text" class="form-control" placeholder="Autor" aria-label="Name" aria-describedby="button-addon1" name="Autor" maxlength="100" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Editorial</span>
+                    <input type="text" class="form-control" placeholder="Editorial" aria-label="Name" aria-describedby="button-addon1" name="Editorial" maxlength="100" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Sinopsis</span>
+                    <input type="text" class="form-control" placeholder="Sinopsis" aria-label="Email" aria-describedby="button-addon1" name="Sinopsis" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mt-3 mb-3" style="width: 75%; margin: auto;">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Cantidad</span>
+                    <input type="number" class="form-control" placeholder="Cantidad" aria-label="Email" aria-describedby="button-addon1" min="30" max="60" value="0" name="Cantidad" required>
+                </div>
+            </div>                
+        </div>
+        <div class="row">
+            <div class="col-12 mt-3 mb-3">
+              <select id="Categoria" name="Categoria" style="border-radius: 6px; padding: 8px; background-color: #fff;" class="w-75">
+                <option value="0">Seleccione una Categoria</option>
+                @foreach(var Categoria in Model)
+                {
+                    <option value="@Categoria.IDCategoria">@Categoria.DescCategoria</option>
+                }
+              </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 mt-3 mb-3">
+                <input type="file" name="Imagen" accept=".jpg, .png, .jpeg" required>
+            </div>
+            <div class="col-12 col-md-6 mt-3 mb-3">
+                <button class="btn btn-dark btn-md" style="border-radius: 10px; padding: 5px 30px; margin: auto;" type="submit">Añadir Libro</button>
+            </div>
+        </div>
+    </div>
+    </form>
+    <script>
+        function ValidarCategoria()
+        {
+            var Categoria = document.getElementById("Categoria").value;
+            if(Categoria == 0)
+            {
+                alert("Porfavor seleccione una categoria");
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

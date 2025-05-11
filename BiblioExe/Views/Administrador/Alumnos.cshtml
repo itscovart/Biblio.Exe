@@ -1,0 +1,118 @@
+﻿@model List<BiblioExe.Models.Alumno>
+
+@{
+    ViewData["Title"] = "Alumnos";
+    var estado = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="container-fluid mt-5" style="min-height: 60vh; max-width: 180vh">
+        <div class="row mb-2">
+            <div class="col-12 d-flex justify-content-center">
+                <h2>Alumnos</h2>
+            </div>
+        </div>
+    <form asp-action="ValidarRolAlumno">
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Boleta</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido Materno</th>
+                    <th scope="col">Grupo</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Funciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var id = 1;
+                }
+                @foreach (var Alumno in Model)
+                {
+                <input type="hidden" name="BoletaSeleccionada" id="BoletaSeleccionada" value="" />
+                <tr>
+                    <th scope="row">@Alumno.Boleta</th>
+                    <td>@Alumno.Nombre</td>
+                    <td>@Alumno.AP</td>
+                    <td>@Alumno.AM</td>
+                    <td>@Alumno.Grupo</td>
+                    @{
+                        estado = "";
+                        foreach(var Datos in @ViewBag.DatosAlumno)
+                        {
+                            if(@Alumno.Boleta == Datos.Boleta)
+                            {
+                                if(Datos.IDTipoUsuario == "1")
+                                {
+                                    estado = "Alumno";
+                                    break;
+                                }
+                                if(Datos.IDTipoUsuario == "2")
+                                {
+                                    estado = "Jefe de Grupo";
+                                    break;
+                                }
+                            }
+                            else 
+                            {
+                            estado = "No Registrado";
+                            }
+                        }
+                        <td>@estado</td>
+                    }
+                    @if (estado == "Alumno" || estado == "Jefe de Grupo")
+                    {
+                        <td>
+                        <input type="hidden" name="Boleta" value="@Alumno.Boleta"></input>
+                        <button type="button" class="btn btn-secondary btn-md" data-bs-toggle="modal" data-bs-target="#exampleModal" style="border-radius: 10px" onclick="setSelectedFolio('@Alumno.Boleta')">
+                            Editar
+                        </button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <select name="IDTipoUsuario" class="form-select">
+                                            <option value="1">Alumno</option>
+                                            <option value="2">Jefe de Grupo</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </td>
+                    }
+                    @if(estado == "No Registrado")
+                    {
+                    <td></td>
+                    }
+                </tr>
+                id++;
+                }
+            </tbody>
+        </table>
+    </form>
+    </div>
+    <script>
+    function setSelectedFolio(folio) {
+        document.getElementById("BoletaSeleccionada").value = folio;
+    }
+</script>
+</body>
+</html>

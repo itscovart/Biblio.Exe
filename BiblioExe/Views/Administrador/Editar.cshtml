@@ -1,0 +1,80 @@
+﻿@{
+  var id = Context.Request.Query["id"];
+  ViewData["Title"] = "Editar Libro";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body style="background-color: #900C3F;">
+    <form asp-action="EditarLibro" method="post">
+        <input type="hidden" name="id" value="@id" />
+        <div class="container text-center mt-5" style="width: 70%; background-color: #fdfdfd; border-radius: 30px; padding: 60px 20px; box-shadow: 0px 0px 200px 10px rgb(50,50,50);">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-start">
+              <a class="btn btn-dark btn-lg" style="border-radius: 15px; margin-left: 3%;" asp-action="CatalogoAdmin">Volver</a>
+            </div>
+          </div>          
+          <div class="row align-items-center">
+            <div class="col-12 col-md-6">
+              <div class="row">
+                <div class="col-12">
+                  <img src="~/Images/Catalogo/@ViewBag.Imagen" class="w-50" alt="Loading..." style="border-radius: 5px;">
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 " style="margin-top: 5%;">
+              <div class="input-group mt-3 mb-3" style="width: 80%; margin: auto;">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="@ViewBag.Nombre" maxlength="120" name="Nombre" required>
+              </div>
+              <div class="input-group mt-3 mb-3" style="width: 80%; margin: auto;">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Autor</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="@ViewBag.Autor" maxlength="100"  name="Autor" required>
+              </div>
+              <div class="input-group mt-3 mb-3" style="width: 80%; margin: auto;">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Editorial</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="@ViewBag.Editorial" maxlength="100"  name="Editorial" required>
+              </div>
+              <div class="input-group mt-3 mb-3" style="width: 80%; margin: auto;">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Cantidad</span>
+                <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" max="60" min="30" value="@ViewBag.Existencia"  name="Existencia" required>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center mt-5">
+            <div class="col-6">
+              <a class="btn btn-secondary" asp-action="CatalogoAdmin">Volver</a>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Guardar Cambios
+              </button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>¿Estas seguro de guardar los cambios?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-secondary">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </form>
+</body>
+</html>

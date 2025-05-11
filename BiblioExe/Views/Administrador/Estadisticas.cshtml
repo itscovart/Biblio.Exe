@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"
+      integrity="sha512-OD9Gn6cAUQezuljS6411uRFr84pkrCtw23Hl5TYzmGyD0YcunJIPSBDzrV8EeCiFxGWWvtJOfVo5pOgB++Jsag=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <style>
+    #myChart {
+      width: 50px;
+      height: 50px;
+      max-width: 50%;
+      max-height: 50%;
+    }
+  </style>
+  <body >
+    <div class="vh-100 justify-content-center align-items-center">
+      <!--mi mayor pedo de html es centrar cosos-->
+      <canvas id="myChart"></canvas>
+    </div>
+  </body >
+  <script>
+    //un coso q manda a llamar el coso
+    const $myChart = document.querySelector("#myChart");
+
+    //los demas cosos
+    const etiquetas = [
+      "CUENTO",
+      "NOVELA",
+      "POESIA",
+      "SUPERACION PERSONAL",
+      "TEATRO",
+    ];
+
+    //conjuntos de cosos dice el video
+    const datosVentas2020 = {
+      label: "CATEGORIAS MAS BUSCADAS",
+      data: [100, 179, 80, 125, 154], // aqui se le da valor a cada coso
+      backgroundColor: [
+        "rgb(0, 255, 0)",
+        "rgb(0, 128, 128)",
+        "rgb(255, 0, 255)",
+        "rgb(255, 255, 0)",
+        "rgb(199, 0, 57 )",
+      ], // le ponemos colorsito a los cosos
+      borderColor: "rgba(0, 0, 0 )", // yo me invente el borde del coso
+      borderWidth: 2,
+    };
+    new Chart($myChart, {
+      type: "bar", // aqui podemos ponerle pie (pay) a los q no saben ingles
+      data: {
+        labels: etiquetas,
+        datasets: [datosVentas2020],
+      },
+
+      //si usamos pay hay q comentar todo este coso
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+  </script>
+</html>

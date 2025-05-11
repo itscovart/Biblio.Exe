@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    var error = Context.Request.Query["error"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/assets/logo-vt.svg" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="justify-content-center align-items-center vh-100" style="background-color: #900C3F;">
+      @if(ViewBag.Error != null)
+    {
+        <script>
+            alert("Correo o Contraseña incorrecta")
+        </script>
+    }
+    <form asp-action="IniciarSesion" method="post" >
+        <div
+            class="bg-white p-5 rounded-5 text-secondary shadow m-auto"
+            style="width: 25rem; margin-top: 5% !important; margin-bottom: 5% !important"
+        >
+            <div class="d-flex justify-content-center">
+            <img
+                src="~/Images/Login/login-icon.svg"
+                alt="login-icon"
+                style="height: 7rem"
+            />
+            </div>
+            <div class="text-center fs-1 fw-bold">Iniciar Sesion</div>
+            <div class="input-group mt-4">
+            <div class="input-group-text" style="background-color: #900C3F;">
+                <img
+                src="~/Images/Login/Usuario-icon.svg"
+                alt="Usuario-icon"
+                style="height: 1rem"
+                />
+            </div>
+            <input
+                class="form-control bg-light"
+                type="email"
+                placeholder="Usuario"
+                name="Usuario"
+                maxlength="80"
+                minlength="5"
+                required
+            />
+            </div>
+            <div class="input-group mt-1">
+            <div class="input-group-text" style="background-color: #900C3F;">
+                <img
+                src="~/Images/Login/Contrasena-icon.svg"
+                alt="Contrasena-icon"
+                style="height: 1rem"
+                />
+            </div>
+            <input
+                class="form-control bg-light"
+                type="password"
+                placeholder="Contraseña"
+                id="InputPass"
+                name="Contraseña"
+                maxlength="20"
+                minlength="8"
+                required
+            />
+            </div>
+            <div class="d-flex justify-content-end mt-1">
+            <div class="d-flex align-items-center gap-1">
+                <div class="pt-1" style="font-size: 0.9rem">Mostrar contraseña</div>
+                <input class="form-check-input" type="checkbox" id="toggleCheckbox" onclick="MostrarContraseña()"/>
+            </div>
+            </div>
+            
+            <div >
+                <input value="Iniciar Sesion" type="submit" class="btn  text-white w-100 mt-4 fw-semibold shadow-sm" style="background-color: #900C3F;"/>
+            </div>
+            <div class="d-flex gap-1 justify-content-center mt-1">
+            <div>No estas registrado?</div>
+            <a
+              asp-action="Registro"
+              class="text-decoration-none text-info fw-semibold"
+              >Registrarse</a>
+          </div>
+        </div>
+        <script>
+            function MostrarContraseña(){
+                var passwordInput = document.getElementById("InputPass");
+                var checkbox = document.getElementById("toggleCheckbox");
+                if (checkbox.checked) {
+                    passwordInput.type = "text";
+                } 
+                else 
+                    passwordInput.type = "password";
+            }
+        </script>
+    </form>
+    </body>
+    </html>

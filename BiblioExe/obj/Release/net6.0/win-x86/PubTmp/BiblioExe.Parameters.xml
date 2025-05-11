@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="BiblioExe" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^E:\\FUCKING\ TITULO\\BiblioExe\\BiblioExe\\obj\\Release\\net6\.0\\win-x86\\PubTmp\\Out\\$" />
+  </parameter>
+</parameters>
